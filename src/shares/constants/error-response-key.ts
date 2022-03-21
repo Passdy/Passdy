@@ -1,0 +1,1 @@
+export const INVALID_ADDRESS = 'INVALID_ADDRESS';

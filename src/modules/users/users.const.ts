@@ -1,0 +1,16 @@
+export enum UserResponseErrorKey {
+  UserExist = 'USER_EXIST',
+  EmailExist = 'EMAIL_EXIST',
+  InvalidUsername = 'INVALID_USERNAME',
+  InvalidPassword = 'INVALID_PASSWORD',
+  InvalidEmail = 'INVALID_EMAIL',
+  RePasswordNotMatch = 'RE_PASSWORD_NOT_MATCH',
+  EmailNotVerified = 'EMAIL_NOT_VERIFIED',
+  InvalidTypeConfirm = 'INVALID_TYPE_CONFIRM',
+  InvalidUser = 'INVALID_USER',
+  CodeExpire = 'CODE_EXPIRE',
+  EmailVerified = 'EMAIL_VERIFIED',
+  CanNotResetPassword = 'CAN_NOT_RESET_PASSWORD',
+  NotPermission = 'NOT_PERMISSION',
+  InvalidBalance = 'INVALID_BALANCE',
+}
