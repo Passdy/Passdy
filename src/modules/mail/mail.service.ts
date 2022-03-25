@@ -2,13 +2,15 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/models/entities/users.entity';
 import { CreateOrderDto } from 'src/modules/order/order.dto';
+import { getConfig } from 'src/configs';
 
 @Injectable()
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
   async sendUserConfirmation(user: User, typeConfirm: string) {
-    const url = `${process.env.BASE_URL}/user/verify?type_confirm=${typeConfirm}&confirm_code=${user.confirm_code}&email=${user.email}`;
+    const baseUrl = getConfig().get<string>('base_url');
+    const url = `${baseUrl}/user/verify?type_confirm=${typeConfirm}&confirm_code=${user.confirm_code}&email=${user.email}`;
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Confirm your Email',

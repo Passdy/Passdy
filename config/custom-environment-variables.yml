@@ -12,6 +12,7 @@ default:
 
 mail_user: MAIL_USER
 mail_password: MAIL_PASSWORD
+base_url: BASE_URL
 
 cron:
   enable:
