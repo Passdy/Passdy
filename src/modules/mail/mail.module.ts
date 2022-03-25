@@ -3,6 +3,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { Module } from '@nestjs/common';
 import { MailService } from 'src/modules/mail/mail.service';
 import { join } from 'path';
+import { getConfig } from 'src/configs';
 
 @Module({
   imports: [
@@ -11,8 +12,8 @@ import { join } from 'path';
         host: 'smtp.gmail.com',
         secure: false,
         auth: {
-          user: 'minhnvgch@gmail.com',
-          pass: 'Hudbotattao21081998',
+          user: getConfig().get<'string'>('mail_user'),
+          pass: getConfig().get<'string'>('mail_password'),
         },
       },
       defaults: {

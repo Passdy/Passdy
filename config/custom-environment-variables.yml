@@ -10,6 +10,9 @@ default:
   password: MYSQL_PASSWORD
   database: MYSQL_DATABASE
 
+mail_user: MAIL_USER
+mail_password: MAIL_PASSWORD
+
 cron:
   enable:
     __name: CRON_ENABLE
