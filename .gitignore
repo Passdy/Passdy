@@ -14,7 +14,7 @@ Dockerfile
 # OS
 .DS_Store
 /docker
-
+.env
 # Tests
 /coverage
 /.nyc_output
