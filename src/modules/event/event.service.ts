@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fs = require('fs');
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRole } from 'src/models/entities/users.entity';
@@ -149,14 +151,14 @@ export class EventService {
     event.title = createEventDto.title;
     event.content = createEventDto.content;
     event.display_type = createEventDto.display_type;
-    const newEvent = await this.eventRepository.save(createEventDto);
+    const newEvent = await this.eventRepository.save(event);
     const eventMap = [];
     for (const childEvent of listChildEvent) {
       const newEventMap = new EventMap();
-      newEventMap.event_id = event.id;
+      newEventMap.event_id = newEvent.id;
       newEventMap.child_event_id = childEvent.id;
       newEventMap.status = EventMapStatus.Active;
-      eventMap.push(eventMap);
+      eventMap.push(newEventMap);
     }
     await this.eventMapRepository.save(eventMap);
     return {
@@ -165,7 +167,33 @@ export class EventService {
     };
   }
 
-  // async getEvent():Promise<Response<any[]>> {
-  //   const listEvent = await this.eventRepository.getListEventActive();
-  // }
+  async getEvent(): Promise<Response<any[]>> {
+    const dataReturn = [];
+    const listEvent = await this.eventRepository.getListEventActive();
+    for (const event of listEvent) {
+      const listChildEventIds =
+        await this.eventMapRepository.getListChildEventByEventId(event.id);
+      const listChildEvent = await this.childEventRepository.getListChildByIds(listChildEventIds);
+      dataReturn.push({
+        event: event,
+        listChildEvent: listChildEvent,
+      });
+    }
+    return {
+      data: dataReturn,
+      metadata: null,
+    };
+  }
+
+  async getImage(imagePath: string, res): Promise<any> {
+    fs.readFile(imagePath, function (err, content) {
+      if (err) {
+        res.writeHead(400, { 'Content-type': 'text/html' });
+        res.end('No such image');
+      } else {
+        res.writeHead(200, { 'Content-type': 'image/jpg' });
+        res.end(content);
+      }
+    });
+  }
 }

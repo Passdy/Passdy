@@ -5,9 +5,11 @@ import {
   Get,
   Post,
   Query,
+  Request,
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  Response as Rs,
 } from '@nestjs/common';
 import { UserID } from 'src/shares/decorators/get-user-id.decorator';
 import { Response } from 'src/shares/interceptors/response.interceptor';
@@ -76,9 +78,16 @@ export class EventController {
     return await this.eventService.createEvent(userId, createEventDto);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get()
-  // async getEvent(): Promise<Response<any[]>> {
-  //   return await this.eventService.getEvent();
-  // }
+  @Get()
+  async getEvent(): Promise<Response<any[]>> {
+    return await this.eventService.getEvent();
+  }
+
+  @Get('get-image')
+  async getImage(
+    @Query() param: { image_path: string },
+    @Rs() res,
+  ): Promise<any> {
+    return await this.eventService.getImage(param.image_path, res);
+  }
 }
