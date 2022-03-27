@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Address } from 'src/models/entities/address.entity';
-import { SearchAddressDto } from "../../modules/address/address.dto";
+import { SearchAddressDto } from 'src/modules/address/address.dto';
 
 @EntityRepository(Address)
 export class AddressRepository extends Repository<Address> {
