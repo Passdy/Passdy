@@ -1,4 +1,4 @@
-import { EntityRepository, In, Repository } from "typeorm";
+import { EntityRepository, In, Repository } from 'typeorm';
 import {
   ChildEvent,
   ChildEventStatus,
