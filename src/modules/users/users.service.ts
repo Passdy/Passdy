@@ -80,6 +80,7 @@ export class UsersService {
     await this.mailService.sendUserConfirmation(user, TypeConfirm.Email);
     const newUser = await this.userRepository.save(user);
     newUser.confirm_code = '';
+    newUser.password = '';
     return {
       data: newUser,
       metadata: null,
