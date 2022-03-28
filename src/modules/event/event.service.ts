@@ -4,7 +4,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRole } from 'src/models/entities/users.entity';
 import { UserRepository } from 'src/models/repositories/users.repository';
-import { Event } from 'src/models/entities/events.entity';
+import { Event, EventStatus } from 'src/models/entities/events.entity';
 import { EventRepository } from 'src/models/repositories/events.repository';
 import {
   ChildEvent,
@@ -173,7 +173,9 @@ export class EventService {
     for (const event of listEvent) {
       const listChildEventIds =
         await this.eventMapRepository.getListChildEventByEventId(event.id);
-      const listChildEvent = await this.childEventRepository.getListChildByIds(listChildEventIds);
+      const listChildEvent = await this.childEventRepository.getListChildByIds(
+        listChildEventIds,
+      );
       dataReturn.push({
         event: event,
         listChildEvent: listChildEvent,
@@ -195,5 +197,20 @@ export class EventService {
         res.end(content);
       }
     });
+  }
+
+  async deleteEvent(idEvent: number): Promise<boolean> {
+    const event = await this.eventRepository.findOne(idEvent);
+    if (!event) {
+      throw new HttpException(
+        {
+          message: 'No event found',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    event.status = EventStatus.Delete;
+    await this.eventRepository.save(event);
+    return true;
   }
 }

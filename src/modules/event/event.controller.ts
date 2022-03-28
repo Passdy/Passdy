@@ -10,6 +10,7 @@ import {
   UseGuards,
   UseInterceptors,
   Response as Rs,
+  Delete,
 } from '@nestjs/common';
 import { UserID } from 'src/shares/decorators/get-user-id.decorator';
 import { Response } from 'src/shares/interceptors/response.interceptor';
@@ -89,5 +90,10 @@ export class EventController {
     @Rs() res,
   ): Promise<any> {
     return await this.eventService.getImage(param.image_path, res);
+  }
+
+  @Delete()
+  async deleteEvent(@Query() param: { id: number }): Promise<boolean> {
+    return await this.eventService.deleteEvent(param.id);
   }
 }
