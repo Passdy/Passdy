@@ -58,7 +58,7 @@ export class OrderService {
 
     createOrderDto.user_id = userId;
     createOrderDto.created_at = new Date().getTime().toString();
-    await this.mailService.sendMailOrder(createOrderDto);
+    await this.mailService.sendMailOrder(createOrderDto, user);
     const order = await this.orderRepository.save(createOrderDto);
     return {
       data: order,

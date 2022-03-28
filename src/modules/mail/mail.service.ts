@@ -13,10 +13,9 @@ export class MailService {
     const url = `${baseUrl}/user/verify?type_confirm=${typeConfirm}&confirm_code=${user.confirm_code}&email=${user.email}`;
     await this.mailerService.sendMail({
       to: user.email,
-      subject: 'Confirm your Email',
+      subject: 'ĐĂNG KÝ THÀNH CÔNG',
       template: '.templates/confirmation',
       context: {
-        name: user.email,
         url,
       },
     });
@@ -26,24 +25,24 @@ export class MailService {
     const code = user.confirm_code;
     await this.mailerService.sendMail({
       to: user.email,
-      subject: 'Reset Your Password',
+      subject: 'ĐỔI MẬT KHẨU',
       template: '.templates/reset-pass',
       context: {
-        name: user.email,
         code,
       },
     });
   }
 
-  async sendMailOrder(order: CreateOrderDto): Promise<void> {
-    const content = `An order with clean out of ${order.type_give}, dont accept of ${order.type_receive} and address ${order.address} was created`;
+  async sendMailOrder(order: CreateOrderDto, user: User): Promise<void> {
     await this.mailerService.sendMail({
-      to: 'minhnvgch@gmail.com',
-      subject: 'Order Request',
+      to: user.email,
+      subject: 'TẠO YÊU CẦU LẤY QUẦN ÁO',
       template: '.templates/order',
       context: {
-        name: 'Admin',
-        content: content,
+        time: new Date(),
+        name: user.full_name,
+        phone: order.phone,
+        address: order.address,
       },
     });
   }
