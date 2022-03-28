@@ -68,6 +68,7 @@ export class UsersService {
     }
 
     const user = new User();
+    user.full_name = usersRegisterDto.fullname;
     user.password = await bcrypt.hash(
       usersRegisterDto.password,
       Number(process.env.BCRYPT_SALT_OR_ROUND),
