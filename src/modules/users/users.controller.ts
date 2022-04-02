@@ -76,4 +76,34 @@ export class UsersController {
       body.balance,
     );
   }
+
+  @Get('list-group')
+  async listGroup(): Promise<Response<any>> {
+    return await this.userService.getListRole();
+  }
+
+  @Get('user-list')
+  async getUser(
+    @Query()
+    params: {
+      full_name: string;
+      phone_number: string;
+      email: string;
+      group_id: string;
+    },
+  ): Promise<Response<any>> {
+    return await this.userService.getListUser(
+      params.full_name,
+      params.phone_number,
+      params.email,
+      params.group_id,
+    );
+  }
+
+  @Get('modify-user')
+  async modifyUser(
+    @Query() param: { modifyType: string; idUser: number },
+  ): Promise<Response<boolean>> {
+    return await this.userService.modifyUser(param.modifyType, param.idUser);
+  }
 }

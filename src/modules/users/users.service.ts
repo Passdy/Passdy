@@ -264,4 +264,46 @@ export class UsersService {
       metadata: null,
     };
   }
+
+  async getListRole(): Promise<Response<UserRole>> {
+    return {
+      // @ts-ignore
+      data: UserRole,
+      metadata: null,
+    };
+  }
+
+  async getListUser(
+    full_name: string,
+    phone_number: string,
+    email: string,
+    group_id: string,
+  ): Promise<Response<User[]>> {
+    const users = await this.userRepository.getListUser(
+      full_name,
+      phone_number,
+      email,
+      group_id,
+    );
+    return {
+      data: users,
+      metadata: null,
+    };
+  }
+
+  async modifyUser(
+    modifyType: string,
+    idUser: number,
+  ): Promise<Response<boolean>> {
+    const user = await this.userRepository.getUserById(idUser);
+    if (!user) return { data: false, metadata: null };
+    if (modifyType === '1') user.status = UserStatus.Active;
+    if (modifyType === '2') user.status = UserStatus.Locked;
+    if (modifyType === '3') {
+      await this.userRepository.delete({ id: idUser });
+      return { data: true, metadata: null };
+    }
+    await this.userRepository.save(user);
+    return { data: true, metadata: null };
+  }
 }
