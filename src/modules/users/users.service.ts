@@ -265,6 +265,18 @@ export class UsersService {
     };
   }
 
+  async isAdmin(userId: number): Promise<void> {
+    const user = await this.userRepository.getUserById(userId);
+    if (!user || user.role !== UserRole.Admin) {
+      throw new HttpException(
+        {
+          message: 'No permission',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async getListRole(): Promise<Response<UserRole>> {
     return {
       // @ts-ignore

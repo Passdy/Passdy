@@ -78,12 +78,16 @@ export class UsersController {
   }
 
   @Get('list-group')
-  async listGroup(): Promise<Response<any>> {
+  @UseGuards(JwtAuthGuard)
+  async listGroup(@UserID() userId: number): Promise<Response<any>> {
+    await this.userService.isAdmin(userId);
     return await this.userService.getListRole();
   }
 
   @Get('user-list')
+  @UseGuards(JwtAuthGuard)
   async getUser(
+    @UserID() userId: number,
     @Query()
     params: {
       full_name: string;
@@ -92,6 +96,7 @@ export class UsersController {
       group_id: string;
     },
   ): Promise<Response<any>> {
+    await this.userService.isAdmin(userId);
     return await this.userService.getListUser(
       params.full_name,
       params.phone_number,
@@ -101,9 +106,12 @@ export class UsersController {
   }
 
   @Get('modify-user')
+  @UseGuards(JwtAuthGuard)
   async modifyUser(
+    @UserID() userId: number,
     @Query() param: { modifyType: string; idUser: number },
   ): Promise<Response<boolean>> {
+    await this.userService.isAdmin(userId);
     return await this.userService.modifyUser(param.modifyType, param.idUser);
   }
 }
