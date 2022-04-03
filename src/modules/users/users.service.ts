@@ -272,7 +272,7 @@ export class UsersService {
         {
           message: 'No permission',
         },
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.NOT_ACCEPTABLE,
       );
     }
   }
