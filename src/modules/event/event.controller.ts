@@ -58,6 +58,34 @@ export class EventController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: 'src/upload',
+      storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, 'src/upload');
+        },
+        filename: (req, file, cb) => {
+          const names = file.originalname.split('.');
+          cb(null, `${new Date().getTime()}.${names[names.length - 1]}`);
+        },
+      }),
+    }),
+  )
+  @Post('updateChildEvent')
+  async updateChildEvent(
+    @UserID() userId: number,
+    @Body() createChildEventDto: CreateChildEventDto,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<Response<boolean>> {
+    return await this.eventService.updateChildEvent(
+      userId,
+      createChildEventDto,
+      file,
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('child')
   async getListChildEvent(
     @Query() query,
@@ -67,6 +95,9 @@ export class EventController {
       userId,
       query.page,
       query.size,
+      query.name,
+      query.title,
+      query.content,
     );
   }
 

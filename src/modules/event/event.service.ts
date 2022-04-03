@@ -82,6 +82,29 @@ export class EventService {
     };
   }
 
+  async updateChildEvent(
+    userId: number,
+    createChildEventDto: CreateChildEventDto,
+    file: Express.Multer.File,
+  ): Promise<Response<boolean>> {
+    await this.isAdmin(userId);
+    const childEvent = await this.childEventRepository.getChildEventById(
+      createChildEventDto.id,
+    );
+    childEvent.name = createChildEventDto.name;
+    childEvent.title = createChildEventDto.title;
+    childEvent.content = createChildEventDto.content;
+    if (file) {
+      fs.unlinkSync(childEvent.img);
+      childEvent.img = file.path;
+    }
+    await this.childEventRepository.save(childEvent);
+    return {
+      data: true,
+      metadata: null,
+    };
+  }
+
   async isAdmin(userId: number): Promise<void> {
     const user = await this.userRepository.getUserById(userId);
     if (!user || user.role !== UserRole.Admin) {
@@ -95,30 +118,39 @@ export class EventService {
   }
 
   async deleteChildEvent(id: number): Promise<Response<boolean>> {
-    await this.childEventRepository.delete({ id: id });
-    return {
-      data: true,
-      metadata: null,
-    };
+    const childEvent = await this.childEventRepository.getChildEventById(id);
+    try {
+      fs.unlinkSync(childEvent.img);
+      await this.childEventRepository.delete({ id: id });
+      return {
+        data: true,
+        metadata: null,
+      };
+    } catch (err) {
+      throw new HttpException(
+        {
+          message: 'INTERNAL SERVER',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async getListChildEvent(
     userId: number,
     page = 1,
     size = 100,
+    name: string,
+    title: string,
+    content: string,
   ): Promise<Response<ChildEvent[]>> {
-    const user = await this.userRepository.findOne(userId);
-    if (!user || user.role !== UserRole.Admin) {
-      throw new HttpException(
-        {
-          key: EventResponseErrorKey.NoPermission,
-        },
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
+    await this.isAdmin(userId);
     const events = await this.childEventRepository.getListChildEvent(
       page,
       size,
+      name,
+      title,
+      content,
     );
     return {
       data: events,

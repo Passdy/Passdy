@@ -19,6 +19,7 @@ export class CreateEventDto {
 }
 
 export class CreateChildEventDto {
+  id: number;
   @IsNotEmpty()
   name: string;
 
