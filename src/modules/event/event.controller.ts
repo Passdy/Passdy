@@ -71,6 +71,16 @@ export class EventController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('deleteChildEvent')
+  async deleteChildEvent(
+    @Query() param: { eventId: number },
+    @UserID() userId: number,
+  ): Promise<Response<boolean>> {
+    await this.eventService.isAdmin(userId);
+    return await this.eventService.deleteChildEvent(param.eventId);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createEvent(
     @UserID() userId: number,

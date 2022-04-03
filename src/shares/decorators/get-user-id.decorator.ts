@@ -20,7 +20,7 @@ export const UserID = createParamDecorator(
     } catch (e) {
       throw new HttpException(
         { key: 'INVALID_ACCESS_TOKEN' },
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.UNAUTHORIZED,
       );
     }
   },

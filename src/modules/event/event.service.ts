@@ -82,6 +82,26 @@ export class EventService {
     };
   }
 
+  async isAdmin(userId: number): Promise<void> {
+    const user = await this.userRepository.getUserById(userId);
+    if (!user || user.role !== UserRole.Admin) {
+      throw new HttpException(
+        {
+          message: 'No permission',
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
+  }
+
+  async deleteChildEvent(id: number): Promise<Response<boolean>> {
+    await this.childEventRepository.delete({ id: id });
+    return {
+      data: true,
+      metadata: null,
+    };
+  }
+
   async getListChildEvent(
     userId: number,
     page = 1,

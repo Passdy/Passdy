@@ -13,6 +13,9 @@ export class ChildEventRepository extends Repository<ChildEvent> {
       },
       skip: (page - 1) * size,
       take: size,
+      order: {
+        id: 'DESC',
+      },
     });
   }
 
