@@ -8,6 +8,9 @@ export class EventRepository extends Repository<Event> {
       where: {
         status: EventStatus.Active,
       },
+      order: {
+        id: 'DESC',
+      },
     });
   }
 }

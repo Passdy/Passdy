@@ -133,8 +133,13 @@ export class EventController {
     return await this.eventService.getImage(param.image_path, res);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete()
-  async deleteEvent(@Query() param: { id: number }): Promise<boolean> {
+  async deleteEvent(
+    @Query() param: { id: number },
+    @UserID() userId: number,
+  ): Promise<boolean> {
+    await this.eventService.isAdmin(userId);
     return await this.eventService.deleteEvent(param.id);
   }
 }
