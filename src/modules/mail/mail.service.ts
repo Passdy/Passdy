@@ -40,7 +40,7 @@ export class MailService {
       template: '.templates/order',
       context: {
         time: new Date(),
-        name: user.full_name,
+        name: order.address_name,
         phone: order.phone,
         address: order.address,
       },
