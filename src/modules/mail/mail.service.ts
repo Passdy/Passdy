@@ -16,6 +16,7 @@ export class MailService {
       subject: 'ĐĂNG KÝ THÀNH CÔNG',
       template: '.templates/confirmation',
       context: {
+        name: user.full_name,
         url,
       },
     });
@@ -29,6 +30,7 @@ export class MailService {
       template: '.templates/reset-pass',
       context: {
         code,
+        name: user.full_name,
       },
     });
   }
