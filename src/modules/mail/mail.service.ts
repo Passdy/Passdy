@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/models/entities/users.entity';
 import { CreateOrderDto } from 'src/modules/order/order.dto';
 import { getConfig } from 'src/configs';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const moment = require('moment');
 
 @Injectable()
 export class MailService {
@@ -36,11 +38,19 @@ export class MailService {
   }
 
   async sendMailOrder(order: CreateOrderDto, user: User): Promise<void> {
+    const date = new Date();
+    const h = new moment(date).format('h');
+    const amPm = new moment(date).format('a');
+    const dd = new moment(date).format('DD');
+    const mm = new moment(date).format('MM');
+    const yyyy = new moment(date).format('YYYY');
+    const message = `${h} ${amPm} ngày ${dd} tháng ${mm} năm ${yyyy}`;
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'TẠO YÊU CẦU LẤY QUẦN ÁO',
       template: '.templates/order',
       context: {
+        message: message,
         time: new Date(),
         name: order.address_name,
         phone: order.phone,
