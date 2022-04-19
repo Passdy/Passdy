@@ -5,6 +5,12 @@ import {
   OrderTypeGive,
   OrderTypeReceive,
 } from 'src/models/entities/orders.entity';
+import { Repository } from 'typeorm';
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/models/entities/users.entity';
 import { UserRepository } from 'src/models/repositories/users.repository';
@@ -22,7 +28,7 @@ export class OrderService {
     @InjectRepository(Order)
     private orderRepository: OrderRepository,
     private mailService: MailService,
-  ) {}
+  ) { }
 
   async createOrder(
     userId: number,
@@ -64,5 +70,12 @@ export class OrderService {
       data: order,
       metadata: null,
     };
+  }
+
+  async getOrders(userId: number, options: IPaginationOptions): Promise<Pagination<Order>> {
+    return paginate<Order>(
+      await this.orderRepository.getUserOrder(userId),
+      options
+    );
   }
 }
