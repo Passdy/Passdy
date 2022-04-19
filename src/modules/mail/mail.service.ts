@@ -39,11 +39,11 @@ export class MailService {
 
   async sendMailOrder(order: CreateOrderDto, user: User): Promise<void> {
     const date = new Date();
-    const h = new moment(date).format('h');
-    const amPm = new moment(date).format('a');
-    const dd = new moment(date).format('DD');
-    const mm = new moment(date).format('MM');
-    const yyyy = new moment(date).format('YYYY');
+    const h = new moment(date).add(7, 'hours').format('h:mm');
+    const amPm = new moment(date).add(7, 'hours').format('a');
+    const dd = new moment(date).add(7, 'hours').format('DD');
+    const mm = new moment(date).add(7, 'hours').format('MM');
+    const yyyy = new moment(date).add(7, 'hours').format('YYYY');
     const message = `${h} ${amPm} ngày ${dd} tháng ${mm} năm ${yyyy}`;
     await this.mailerService.sendMail({
       to: user.email,
