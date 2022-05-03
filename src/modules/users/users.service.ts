@@ -318,4 +318,22 @@ export class UsersService {
     await this.userRepository.save(user);
     return { data: true, metadata: null };
   }
+
+  async createWithGoogle(email: string, name: string) { 
+    const user = new User();
+    user.full_name = name;
+    user.email = email;
+    user.status = UserStatus.Active;
+    user.type_confirm = TypeConfirm.Email;
+    user.confirm_code = randomString();
+    user.password = ''
+    user.is_registered_with_google = true;
+    const newUser = await this.userRepository.save(user);
+    newUser.confirm_code = '';
+    newUser.password = '';
+    return {
+      data: newUser,
+      metadata: null,
+    };
+  }
 }
