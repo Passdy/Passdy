@@ -42,6 +42,10 @@ export class User {
 
   @Column()
   expire_code: string;
+
+  @Column({ default: false })
+  is_registered_with_google: boolean;
+
 }
 
 export enum UserStatus {
