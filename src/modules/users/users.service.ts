@@ -77,6 +77,7 @@ export class UsersService {
     user.status = UserStatus.Pending;
     user.type_confirm = TypeConfirm.Email;
     user.confirm_code = randomString();
+    user.is_registered_with_google = false;
     const newUser = await this.userRepository.save(user);
     await this.mailService.sendUserConfirmation(user, TypeConfirm.Email);
     newUser.confirm_code = '';

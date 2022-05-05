@@ -16,11 +16,17 @@ export class CreateOrderDto {
   @IsNotEmpty()
   cloth_num: number;
 
+  @IsNotEmpty()
   address_name: string;
+
+  @IsNotEmpty()
   phone: string;
+  
   city_id: number;
   district_id: number;
   ward_id: number;
+
+  @IsNotEmpty()
   address: string;
   address_type: string;
 
