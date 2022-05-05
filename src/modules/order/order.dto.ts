@@ -5,8 +5,11 @@ import {
 } from 'src/models/entities/orders.entity';
 
 export class CreateOrderDto {
-  user_id: number;
+  @IsNotEmpty()
+  email: string;
 
+  user_id: number;
+   
   @IsNotEmpty()
   type_give: OrderTypeGive;
 

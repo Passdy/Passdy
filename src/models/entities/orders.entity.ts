@@ -11,6 +11,9 @@ export class Order {
   user_id: number;
 
   @Column()
+  email: string;
+
+  @Column()
   type_give: OrderTypeGive;
 
   @Column()

@@ -337,4 +337,19 @@ export class UsersService {
       metadata: null,
     };
   }
+
+  async createTempUser(email: string, name: string) {
+    const user = new User();
+    user.full_name = name;
+    user.email = email;
+    user.status = UserStatus.Pending;
+    user.type_confirm = TypeConfirm.Email;
+    user.confirm_code = randomString();
+    user.password = ''
+    user.is_registered_with_google = false;
+    var newUser = await this.userRepository.save(user);
+    delete newUser.confirm_code;
+    delete newUser.password;
+    return newUser;
+  }
 }
