@@ -53,3 +53,13 @@ export enum OrderTypeReceive {
   Recycling = 'recycling',
   Resend = 'resend',
 }
+
+export const OrderTypeGiveMessage = {
+  [OrderTypeGive.Sell] : 'Pass',
+  [OrderTypeGive.Donate] : 'Từ thiện'
+}
+
+export const OrderTypeReceiveMessage = {
+  [OrderTypeReceive.Recycling] : 'Tái chế',
+  [OrderTypeReceive.Resend] : 'Gửi trả'
+}
