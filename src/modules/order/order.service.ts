@@ -5,6 +5,12 @@ import {
   OrderTypeGive,
   OrderTypeReceive,
 } from 'src/models/entities/orders.entity';
+import { Repository } from 'typeorm';
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/models/entities/users.entity';
 import { UserRepository } from 'src/models/repositories/users.repository';
@@ -13,6 +19,7 @@ import { Response } from 'src/shares/interceptors/response.interceptor';
 import { UserResponseErrorKey } from 'src/modules/users/users.const';
 import { OrderResponseErrorKey } from 'src/modules/order/order.const';
 import { MailService } from 'src/modules/mail/mail.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class OrderService {
@@ -22,18 +29,15 @@ export class OrderService {
     @InjectRepository(Order)
     private orderRepository: OrderRepository,
     private mailService: MailService,
-  ) {}
+    private userService: UsersService
+  ) { }
 
   async createOrder(
-    userId: number,
     createOrderDto: CreateOrderDto,
   ): Promise<Response<Order>> {
-    const user = await this.userRepository.findOne(userId);
+    var user = await this.userRepository.getUserByEmail(createOrderDto.email)
     if (!user) {
-      throw new HttpException(
-        { key: UserResponseErrorKey.InvalidUser },
-        HttpStatus.BAD_REQUEST,
-      );
+      user = await this.userService.createTempUser(createOrderDto.email, createOrderDto.address_name)
     }
 
     if (
@@ -55,14 +59,21 @@ export class OrderService {
         HttpStatus.BAD_REQUEST,
       );
     }
-
-    createOrderDto.user_id = userId;
+    createOrderDto.user_id = user.id;
     createOrderDto.created_at = new Date().getTime().toString();
-    await this.mailService.sendMailOrder(createOrderDto, user);
-    const order = await this.orderRepository.save(createOrderDto);
+    await this.mailService.sendMailOrder(createOrderDto);
+    var order = await this.orderRepository.save(createOrderDto);
+    delete order.user_id
     return {
       data: order,
       metadata: null,
     };
+  }
+
+  async getOrders(userId: number, options: IPaginationOptions): Promise<Pagination<Order>> {
+    return paginate<Order>(
+      await this.orderRepository.getUserOrder(userId),
+      options
+    );
   }
 }

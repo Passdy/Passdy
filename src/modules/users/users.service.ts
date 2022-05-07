@@ -77,6 +77,7 @@ export class UsersService {
     user.status = UserStatus.Pending;
     user.type_confirm = TypeConfirm.Email;
     user.confirm_code = randomString();
+    user.is_registered_with_google = false;
     const newUser = await this.userRepository.save(user);
     await this.mailService.sendUserConfirmation(user, TypeConfirm.Email);
     newUser.confirm_code = '';
@@ -317,5 +318,38 @@ export class UsersService {
     }
     await this.userRepository.save(user);
     return { data: true, metadata: null };
+  }
+
+  async createWithGoogle(email: string, name: string) { 
+    const user = new User();
+    user.full_name = name;
+    user.email = email;
+    user.status = UserStatus.Active;
+    user.type_confirm = TypeConfirm.Email;
+    user.confirm_code = randomString();
+    user.password = ''
+    user.is_registered_with_google = true;
+    const newUser = await this.userRepository.save(user);
+    newUser.confirm_code = '';
+    newUser.password = '';
+    return {
+      data: newUser,
+      metadata: null,
+    };
+  }
+
+  async createTempUser(email: string, name: string) {
+    const user = new User();
+    user.full_name = name;
+    user.email = email;
+    user.status = UserStatus.Pending;
+    user.type_confirm = TypeConfirm.Email;
+    user.confirm_code = randomString();
+    user.password = ''
+    user.is_registered_with_google = false;
+    var newUser = await this.userRepository.save(user);
+    delete newUser.confirm_code;
+    delete newUser.password;
+    return newUser;
   }
 }

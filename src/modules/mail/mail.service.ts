@@ -3,6 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/models/entities/users.entity';
 import { CreateOrderDto } from 'src/modules/order/order.dto';
 import { getConfig } from 'src/configs';
+import {
+  OrderTypeGiveMessage,
+  OrderTypeReceiveMessage
+} from 'src/models/entities/orders.entity';
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const moment = require('moment');
 
@@ -37,7 +42,7 @@ export class MailService {
     });
   }
 
-  async sendMailOrder(order: CreateOrderDto, user: User): Promise<void> {
+  async sendMailOrder(order: CreateOrderDto): Promise<void> {
     const date = new Date();
     const h = new moment(date).add(7, 'hours').format('h:mm');
     const amPm = new moment(date).add(7, 'hours').format('a');
@@ -46,7 +51,7 @@ export class MailService {
     const yyyy = new moment(date).add(7, 'hours').format('YYYY');
     const message = `${h} ${amPm} ngày ${dd} tháng ${mm} năm ${yyyy}`;
     await this.mailerService.sendMail({
-      to: user.email,
+      to: order.email,
       subject: 'TẠO YÊU CẦU LẤY QUẦN ÁO',
       template: '.templates/order',
       context: {
@@ -55,7 +60,11 @@ export class MailService {
         name: order.address_name,
         phone: order.phone,
         address: order.address,
+        cloth_num: order.cloth_num,
+        type_give: OrderTypeGiveMessage[order.type_give],
+        type_receive: OrderTypeReceiveMessage[order.type_receive]
       },
+      bcc: process.env.MAIL_BCC
     });
   }
 }

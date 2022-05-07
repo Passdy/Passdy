@@ -11,6 +11,9 @@ export class Order {
   user_id: number;
 
   @Column()
+  email: string;
+
+  @Column()
   type_give: OrderTypeGive;
 
   @Column()
@@ -52,4 +55,14 @@ export enum OrderTypeGive {
 export enum OrderTypeReceive {
   Recycling = 'recycling',
   Resend = 'resend',
+}
+
+export const OrderTypeGiveMessage = {
+  [OrderTypeGive.Sell] : 'Pass',
+  [OrderTypeGive.Donate] : 'Từ thiện'
+}
+
+export const OrderTypeReceiveMessage = {
+  [OrderTypeReceive.Recycling] : 'Tái chế',
+  [OrderTypeReceive.Resend] : 'Gửi trả'
 }

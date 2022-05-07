@@ -11,7 +11,8 @@ import { MailModule } from 'src/modules/mail/mail.module';
 import { OrderModule } from 'src/modules/order/order.module';
 import { EventModule } from 'src/modules/event/event.module';
 import { AddressModule } from 'src/modules/address/address.module';
-
+import { GoogleModule} from 'src/modules/google/google.module'
+ 
 @Module({
   imports: [
     TypeOrmModule.forRoot(defaultConfig),
@@ -23,6 +24,7 @@ import { AddressModule } from 'src/modules/address/address.module';
     OrderModule,
     EventModule,
     AddressModule,
+    GoogleModule
   ],
   controllers: [AppController],
   providers: [AppService],
