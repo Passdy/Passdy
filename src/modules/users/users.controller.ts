@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards, Redirect } from '@nestjs/common';
 import { UsersRegisterDto } from 'src/modules/users/users.dto';
 import { UsersService } from 'src/modules/users/users.service';
 import { User } from 'src/models/entities/users.entity';
@@ -18,6 +18,7 @@ export class UsersController {
   }
 
   @Get('verify')
+  @Redirect(process.env.FE_BASE_URL+ '/active-success')
   public async verify(
     @Query()
     param: {
