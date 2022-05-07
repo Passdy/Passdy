@@ -7,10 +7,12 @@ import { UserRepository } from 'src/models/repositories/users.repository';
 import { Order } from 'src/models/entities/orders.entity';
 import { OrderRepository } from 'src/models/repositories/orders.repository';
 import { MailService } from 'src/modules/mail/mail.service';
+import { UsersModule } from 'src/modules/users/users.module'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, UserRepository, Order, OrderRepository]),
+    UsersModule
   ],
   providers: [OrderService, MailService],
   controllers: [OrderController],

@@ -15,13 +15,11 @@ import {
 export class OrderController {
   constructor(private readonly orderService: OrderService) { }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   async createOrder(
-    @UserID() userId: number,
     @Body() createOrderDto: CreateOrderDto,
   ): Promise<Response<Order>> {
-    return await this.orderService.createOrder(userId, createOrderDto);
+    return await this.orderService.createOrder(createOrderDto);
   }
 
   @UseGuards(JwtAuthGuard)

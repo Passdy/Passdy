@@ -42,7 +42,7 @@ export class MailService {
     });
   }
 
-  async sendMailOrder(order: CreateOrderDto, user: User): Promise<void> {
+  async sendMailOrder(order: CreateOrderDto): Promise<void> {
     const date = new Date();
     const h = new moment(date).add(7, 'hours').format('h:mm');
     const amPm = new moment(date).add(7, 'hours').format('a');
@@ -51,7 +51,7 @@ export class MailService {
     const yyyy = new moment(date).add(7, 'hours').format('YYYY');
     const message = `${h} ${amPm} ngày ${dd} tháng ${mm} năm ${yyyy}`;
     await this.mailerService.sendMail({
-      to: user.email,
+      to: order.email,
       subject: 'TẠO YÊU CẦU LẤY QUẦN ÁO',
       template: '.templates/order',
       context: {
