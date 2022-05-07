@@ -132,6 +132,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
                           `id` int NOT NULL AUTO_INCREMENT,
                           `user_id` int NOT NULL,
+                          `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
                           `type_give` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
                           `type_receive` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
                           `cloth_num` int NOT NULL,
