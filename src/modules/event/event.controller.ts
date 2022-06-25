@@ -24,7 +24,9 @@ import { ChildEvent } from 'src/models/entities/child_events.entity';
 import { Event } from 'src/models/entities/events.entity';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const multer = require('multer');
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('events')
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {}

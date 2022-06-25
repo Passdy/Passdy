@@ -1,8 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsEmpty } from 'class-validator';
 import {
   OrderTypeGive,
   OrderTypeReceive,
 } from 'src/models/entities/orders.entity';
+import { ApiBearerAuth, ApiResponse, ApiTags, ApiProperty } from '@nestjs/swagger';
 
 export class CreateOrderDto {
   @IsNotEmpty()
@@ -34,4 +35,14 @@ export class CreateOrderDto {
   address_type: string;
 
   created_at: string;
+}
+
+export class OrderDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  page: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  limit: number
 }
