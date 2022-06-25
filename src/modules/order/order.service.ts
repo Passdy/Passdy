@@ -4,6 +4,7 @@ import {
   Order,
   OrderTypeGive,
   OrderTypeReceive,
+  OrderStatus
 } from 'src/models/entities/orders.entity';
 import { Repository } from 'typeorm';
 import {
@@ -60,6 +61,7 @@ export class OrderService {
       );
     }
     createOrderDto.user_id = user.id;
+    createOrderDto.status = OrderStatus.Sort;
     createOrderDto.created_at = new Date().getTime().toString();
     await this.mailService.sendMailOrder(createOrderDto);
     var order = await this.orderRepository.save(createOrderDto);
@@ -70,9 +72,16 @@ export class OrderService {
     };
   }
 
-  async getOrders(userId: number, options: IPaginationOptions): Promise<Pagination<Order>> {
+  async getUserOrders(userId: number, options: IPaginationOptions): Promise<Pagination<Order>> {
     return paginate<Order>(
       await this.orderRepository.getUserOrder(userId),
+      options
+    );
+  }
+
+  async getAllOrder(options: IPaginationOptions): Promise<Pagination<Order>> {
+    return paginate<Order>(
+      await this.orderRepository.getAll(),
       options
     );
   }

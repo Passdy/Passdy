@@ -2,6 +2,7 @@ import { IsNotEmpty, IsEmpty } from 'class-validator';
 import {
   OrderTypeGive,
   OrderTypeReceive,
+  OrderStatus
 } from 'src/models/entities/orders.entity';
 import { ApiBearerAuth, ApiResponse, ApiTags, ApiProperty } from '@nestjs/swagger';
 
@@ -35,6 +36,8 @@ export class CreateOrderDto {
   address_type: string;
 
   created_at: string;
+
+  status: OrderStatus;
 }
 
 export class OrderDto {
