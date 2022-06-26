@@ -20,7 +20,15 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "console:dev": "ts-node -r tsconfig-paths/register src/console.ts",
-    "console": "node dist/console.js"
+    "console": "node dist/console.js",
+    "migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
+    "migrate:create": "npm run migrate migration:create -- -n",
+    "migrate:up": "npm run migrate migration:run",
+    "migrate:down": "npm run migrate migration:revert",
+    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n src/ormconfig.ts config",
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n src/ormconfig.ts seed",
+    "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
+    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync"
   },
   "dependencies": {
     "@0x/utils": "6.4.4",
