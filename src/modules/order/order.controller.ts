@@ -11,11 +11,13 @@ import {
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
 import { ApiBearerAuth, ApiResponse, ApiTags, ApiForbiddenResponse} from '@nestjs/swagger';
+import { UsersService } from '../users/users.service';
+import { UserRole } from '../../models/entities/users.entity'
 
 @ApiTags('orders')
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) { }
+  constructor(private readonly orderService: OrderService, private readonly userService: UsersService) { }
 
   @Post()
   async createOrder(
@@ -34,6 +36,10 @@ export class OrderController {
     @Query()
     params: OrderDto,
   ): Promise<Pagination<Order>> {
-    return await this.orderService.getOrders(userId, params)
+    const user = (await this.userService.getInfoUserById(userId)).data;
+    if (user.role == UserRole.Admin) {
+      return await this.orderService.getAllOrder(params);
+    }
+    return await this.orderService.getUserOrders(userId, params)
   }
 }

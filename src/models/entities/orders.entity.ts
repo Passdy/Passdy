@@ -14,6 +14,9 @@ export class Order {
   email: string;
 
   @Column()
+  status: OrderStatus;
+
+  @Column()
   type_give: OrderTypeGive;
 
   @Column()
@@ -55,6 +58,12 @@ export enum OrderTypeGive {
 export enum OrderTypeReceive {
   Recycling = 'recycling',
   Resend = 'resend',
+}
+
+export enum OrderStatus {
+  Sort = 'Sort',
+  Shipped = 'Shipped',
+  Return = 'Return'
 }
 
 export const OrderTypeGiveMessage = {
