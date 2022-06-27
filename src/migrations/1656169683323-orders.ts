@@ -52,6 +52,7 @@ export class orders1656169683323 implements MigrationInterface {
                         type: 'int',
                         isNullable: false,
                     },
+
                     {
                         name: 'address_name',
                         type: 'varchar',
