@@ -10,4 +10,7 @@ export class OrderRepository extends Repository<Order> {
                 { userId: userId }
             )
     }
+    async getAll(): Promise<any> {
+        return this.createQueryBuilder('order')
+    }
 }

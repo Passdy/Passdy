@@ -5,7 +5,9 @@ import { User } from 'src/models/entities/users.entity';
 import { Response } from 'src/shares/interceptors/response.interceptor';
 import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import { UserID } from 'src/shares/decorators/get-user-id.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('user')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}

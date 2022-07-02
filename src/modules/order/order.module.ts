@@ -8,13 +8,14 @@ import { Order } from 'src/models/entities/orders.entity';
 import { OrderRepository } from 'src/models/repositories/orders.repository';
 import { MailService } from 'src/modules/mail/mail.service';
 import { UsersModule } from 'src/modules/users/users.module'
+import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, UserRepository, Order, OrderRepository]),
     UsersModule
   ],
-  providers: [OrderService, MailService],
+  providers: [OrderService, MailService, UsersService],
   controllers: [OrderController],
 })
 export class OrderModule {}

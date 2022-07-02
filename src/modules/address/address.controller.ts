@@ -13,7 +13,9 @@ import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import { AddressService } from 'src/modules/address/address.service';
 import { CreateAddressDto, SearchAddressDto } from "src/modules/address/address.dto";
 import { Address } from 'src/models/entities/address.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('events')
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
