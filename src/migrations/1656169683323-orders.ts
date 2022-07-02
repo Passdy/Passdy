@@ -34,6 +34,8 @@ export class orders1656169683323 implements MigrationInterface {
                         name: 'address',
                         type: 'varchar',
                         isNullable: true,
+                        charset: 'utf8mb4',
+                        collation: 'utf8mb4_unicode_ci'
                     },
                     {
                         name: 'type_give',
@@ -54,6 +56,8 @@ export class orders1656169683323 implements MigrationInterface {
                         name: 'address_name',
                         type: 'varchar',
                         isNullable: true,
+                        charset: 'utf8mb4',
+                        collation: 'utf8mb4_unicode_ci'
                     },
                     {
                         name: 'phone',
