@@ -24,6 +24,8 @@ export class address1656169721438 implements MigrationInterface {
                         name: 'name',
                         type: 'varchar',
                         isNullable: true,
+                        charset: 'utf8mb4',
+                        collation: 'utf8mb4_unicode_ci'
                     },
                     {
                         name: 'parent_id',
