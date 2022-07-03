@@ -12,6 +12,8 @@ import { OrderModule } from 'src/modules/order/order.module';
 import { EventModule } from 'src/modules/event/event.module';
 import { AddressModule } from 'src/modules/address/address.module';
 import { GoogleModule} from 'src/modules/google/google.module'
+import { OrderSortModule } from './modules/order-sort/order-sort.module';
+import { OrderReturnModule } from './modules/order-return/order-return.module';
  
 @Module({
   imports: [
@@ -24,7 +26,9 @@ import { GoogleModule} from 'src/modules/google/google.module'
     OrderModule,
     EventModule,
     AddressModule,
-    GoogleModule
+    GoogleModule,
+    OrderSortModule,
+    OrderReturnModule
   ],
   controllers: [AppController],
   providers: [AppService],
