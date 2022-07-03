@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /src/upload
+/database
 # Logs
 logs
 *.log
@@ -11,6 +12,7 @@ yarn-error.log*
 lerna-debug.log*
 docker-compose.yml
 Dockerfile
+package-lock.json
 # OS
 .DS_Store
 /docker

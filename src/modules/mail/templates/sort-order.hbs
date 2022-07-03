@@ -1,0 +1,40 @@
+<p>Thân chào {{name}},</p>
+<p>Passdy rất vui khi thông báo đơn hàng order #{{order_id}} của bạn đã được xét duyệt xong !</p>
+
+<p><b>THÔNG TIN DUYỆT ĐỒ #{{order_id}} ({{create_time_string}})</b></p>
+
+<hr>
+<p><b>CHI TIẾT YÊU CẦU LẤY QUẦN ÁO</b></p>
+<ul>
+    <li>OrderID: #{{order_id}}</li>
+    <li>Lê Nam Anh</li>
+    <li>namanhle59@gmail.com</li>
+    <li>Capital Garden Building, 102 Trường Chinh, Hà Nội., Phường Khương Thượng, Quận Đống Đa, Hà Nội, Việt Nam</li>
+    <li>T: 0963557153</li>
+    <li>Số lượng: {{number_receive}}</li>
+</ul>
+<p><b>CHI TIẾT KẾT QUẢ DUYỆT ĐỒ</b></p>
+<hr>
+<ul>
+    <li>Tổng quần áo: {{number_receive}}</li>
+    <li>Số quần áo xét duyệt thành công: {{number_pass}}</li>
+    {{#if is_return}}
+    <li>Số đồ được trả lại : {{number_return}} </li>
+    {{else}}
+    <li>Số đồ sẽ được từ thiện : {{number_return}} </li>
+    {{/if}}
+
+</ul>
+
+<br /><br />
+<i>Lưu ý: Với các món đồ xét duyện thành công, Passdy sẽ nhanh chóng list và đăng bán trên hệ thống của chúng mình. Với
+    các món đồ được gửi trả/từ thiện, bạn nhớ để ý điện thoại để Passdy dễ dàng liên hệ để gửi trả bạn đồ nhé.<i>
+        <p>Mọi vướng mắc liên quan đến dịch vụ của Passdy, bạn liên hệ với chúng mình qua tổng đài 0948256677 hoặc nhắn
+            tin qua fanpage: <a href='https://www.facebook.com/passdyvn'>Passdyvn</a> để được hỗ trợ nhanh chóng nhất
+            nhé!
+        <p>
+            <br />
+        <p>Thân gửi,</p>
+        <b>Ngọc Diệp</b>
+        <br />
+        <p>Passdy Customer Support</p>

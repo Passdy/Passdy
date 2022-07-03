@@ -13,4 +13,8 @@ export class OrderRepository extends Repository<Order> {
     async getAll(): Promise<any> {
         return this.createQueryBuilder('order')
     }
+
+    async getOrderById(id: number): Promise<any> {
+        return this.findOne(id);
+    }
 }

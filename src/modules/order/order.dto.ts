@@ -49,3 +49,41 @@ export class OrderDto {
   @IsNotEmpty()
   limit: number
 }
+
+export class SortUpdateDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  order_id: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  num_recieve: number
+
+  @ApiProperty()
+  @IsNotEmpty()
+  pass: number
+}
+
+export class ShipUpdateDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  order_id: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  number_of_clothes: number
+}
+
+export class ReturnUpdateDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  order_id: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  number_of_clothes: number
+
+  @ApiProperty()
+  @IsNotEmpty()
+  ship_fee: number
+}
