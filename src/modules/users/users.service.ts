@@ -280,6 +280,7 @@ export class UsersService {
 
   async getListRole(): Promise<Response<UserRole>> {
     return {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       data: UserRole,
       metadata: null,
@@ -320,14 +321,14 @@ export class UsersService {
     return { data: true, metadata: null };
   }
 
-  async createWithGoogle(email: string, name: string) { 
+  async createWithGoogle(email: string, name: string) {
     const user = new User();
     user.full_name = name;
     user.email = email;
     user.status = UserStatus.Active;
     user.type_confirm = TypeConfirm.Email;
     user.confirm_code = randomString();
-    user.password = ''
+    user.password = '';
     user.is_registered_with_google = true;
     const newUser = await this.userRepository.save(user);
     newUser.confirm_code = '';
@@ -345,9 +346,9 @@ export class UsersService {
     user.status = UserStatus.Pending;
     user.type_confirm = TypeConfirm.Email;
     user.confirm_code = randomString();
-    user.password = ''
+    user.password = '';
     user.is_registered_with_google = false;
-    var newUser = await this.userRepository.save(user);
+    const newUser = await this.userRepository.save(user);
     delete newUser.confirm_code;
     delete newUser.password;
     return newUser;

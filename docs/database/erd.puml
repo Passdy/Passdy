@@ -1,0 +1,233 @@
+@startuml Passdy_ERD
+skinparam linetype ortho
+
+entity users {
+  * id : number <<generated>>
+  * email
+  --
+  * phone_number : text
+  * address : text
+}
+
+entity coupons {
+  * id : number <<generated>>
+  --
+  * name : text
+  percent : number
+}
+
+entity user_coupons {
+  * id : number <<generated>>
+  * user_id : number <<FK>>
+  * coupon_id : number <<FK>>
+}
+
+entity orders {
+  * id : number <<generated>>
+  --
+  * email : text
+  user_id : number <<FK>>
+}
+
+entity products {
+  * id : number <<generated>>
+  * order_id : number <<FK>>
+  * sku : text
+  --
+  * price : number
+  * amount : number
+  * sort_status : text
+  * product_status : text
+  * sell_status
+  * product_type_id : number <<FK>>
+  size_id : number <<FK>>
+  color_id : number <<FK>>
+  description : text
+  measure: text
+  pattern_id: number <<FK>>
+  material_id: number <<FK>>
+  branch_id : number <<FK>>
+  discount_percent : numner <<FK>>
+}
+
+' ex : Womman, Kid, Asscessories
+entity departments {
+  * id : number <<generated>>
+  --
+  * name : text
+}
+
+' ex : Jacket, Dress
+entity categories {
+  * id : number <<generated>>
+  --
+  * name : text
+  * department_id : number <<FK>>
+}
+
+' ex : A-line, shift, maxi, ..
+entity product_types {
+  * id : number <<generated>>
+  --
+  * category_id : number <<FK>>
+  * name : text
+}
+
+entity sizes {
+  * id : number <<generated>>
+  --
+  * name : text
+  * type : text
+}
+
+
+entity materials {
+  * id : number <<generated>>
+  --
+  * name : text
+}
+
+entity patterns {
+  * id : number <<generated>>
+  --
+  * name : text
+
+}
+
+entity brands {
+  * id : number <<generated>>
+  --
+  * name : text
+  logo : text
+}
+
+entity colors {
+  * id : number <<generated>>
+  --
+  * name : text
+  code : text
+}
+
+entity images {
+  * id : number <<generated>>
+  --
+  * name : text
+  * link : text
+}
+
+entity product_images {
+  * id : number <<generated>>
+  * product_id : number <<FK>>
+  * image_id : number <<FK>>
+}
+
+entity collections {
+  * id : number <<generated>>
+  --
+  * name : text
+}
+
+entity collection_items {
+  * id : number <<generated>>
+  * product_id : number <<FK>>
+}
+
+
+' Cart 
+
+entity carts {
+  * id : number <<generated>>
+  --
+  user_id : number <<FK>>
+  * cart_key : text  
+}
+
+entity cart_items {
+  * id : number <<generated>>
+  --
+  * cart_id : number <<FK>>
+  price : number <<FK>>
+}
+
+
+' Order
+
+entity order_buys {
+  * id : number <<generated>>
+  --
+  user_id : number <<FK>>
+  total_price : number
+  tax : number
+  delivery_fee : number
+  user_coupon_id : number <<FK>>
+  status: number
+  payment_method: number <<FK>>
+}
+
+
+
+entity order_buy_items {
+  * id : number <<generated>>
+  --
+  order_buy_id : number <<FK>>
+  product_id : number <<FK>>
+}
+
+
+' Payment
+entity payment_methods {
+  * id : number <<generated>>
+  --
+  name : text
+  description : text
+}
+
+' Delivery
+
+entity shipping {
+  * id : number <<generated>>
+  --
+  * order_id: number <<generated>>
+  * type : number
+  * receiver : text
+  * address : text
+  * phone_number : text 
+  * status : text
+}
+
+
+' Relationship
+
+products ||--|{ product_images
+products ||--o{ collection_items
+products ||--|| patterns
+products ||--|| materials
+products ||--|| brands
+products ||--|| colors
+products ||--|| product_types
+products ||--|| sizes
+
+departments ||--o{ categories
+categories ||--o{ product_types
+
+carts ||--|{ cart_items
+carts ||--|| order_buys
+cart_items ||--|| products
+
+order_buys ||--|{ order_buy_items
+order_buys ||--|| shipping
+order_buys ||--o| payment_methods
+order_buys ||--o| user_coupons
+order_buy_items ||--|| products
+
+product_images ||--|| images
+collection_items }o--|| collections
+
+users ||--o{ orders
+users ||--o{ order_buys
+users ||--o{ carts
+
+coupons ||--o{ user_coupons
+user_coupons }o--|| users
+
+@enduml
