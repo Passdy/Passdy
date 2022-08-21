@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinColumn, OneToMany, JoinTable, ManyToMany } from 'typeorm';
 import { Coupon } from './coupon.entity';
 import { PaymentMethod } from './payment-method.entity';
+import { Product } from './product.entity';
 
 export enum OrderBuyStatus {
   /** Create order buy */
@@ -57,4 +58,18 @@ export class OrderBuy {
   @ManyToOne(() => PaymentMethod)
   @JoinColumn({ name: "payment_method_id" })
   payment_method: PaymentMethod
+
+  @ManyToMany(type => Product)
+  @JoinTable({
+    name: "order_buy_items",
+    joinColumn: {
+      name: "products",
+      referencedColumnName: "id"
+    },
+    inverseJoinColumn: {
+      name: "order_buys",
+      referencedColumnName: "id"
+    }
+  })
+  products: Product[];
 }
