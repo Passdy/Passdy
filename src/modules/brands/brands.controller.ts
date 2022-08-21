@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiForbiddenResponse, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserRole } from 'src/models/entities/users.entity';
 import { Roles } from 'src/shares/decorators/role.decorator';
 import { RolesGuard } from 'src/shares/guards/roles.guard';
@@ -8,6 +8,7 @@ import { BrandsService } from './brands.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 
+@ApiTags('brands')
 @Controller('brands')
 export class BrandsController {
   constructor(private readonly brandsService: BrandsService) {}

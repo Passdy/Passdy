@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PatternsService } from './patterns.service';
 import { CreatePatternDto } from './dto/create-pattern.dto';
 import { UpdatePatternDto } from './dto/update-pattern.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('patterns')
 @Controller('patterns')
 export class PatternsController {
   constructor(private readonly patternsService: PatternsService) {}
